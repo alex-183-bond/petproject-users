@@ -1,23 +1,18 @@
-import {useState} from "react";
+import {useRef} from "react";
 import Card from "../UI/Card";
 import Button from "../UI/Button";
 
 import styles from './UserForm.module.css'
 
 const UserForm = ({onAddUser, onInvalidUser}) => {
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
-
-  const nameChangeHandler = (event) => {
-    setName(event.target.value);
-  };
-
-  const ageChangeHandler = (event) => {
-    setAge(event.target.value);
-  };
+  const nameInputRef = useRef();
+  const ageInputRef = useRef();
 
   const addUserHandler = (event) => {
     event.preventDefault();
+
+    const name = nameInputRef.current.value;
+    const age = ageInputRef.current.value;
 
     if (name.trim().length === 0 || age.trim().length === 0) {
       onInvalidUser("Please enter a valid name and age (non-empty values)");
@@ -30,8 +25,8 @@ const UserForm = ({onAddUser, onInvalidUser}) => {
 
     onAddUser({name, age});
 
-    setName('');
-    setAge('');
+    nameInputRef.current.value = '';
+    ageInputRef.current.value = '';
   };
 
 
@@ -41,16 +36,14 @@ const UserForm = ({onAddUser, onInvalidUser}) => {
         <label htmlFor="username">Username</label>
         <input
           id="username"
-          value={name}
           type="text"
-          onChange={nameChangeHandler}
+          ref={nameInputRef}
         />
         <label htmlFor="age">Age (Years)</label>
         <input
           id="age"
-          value={age}
           type="number"
-          onChange={ageChangeHandler}
+          ref={ageInputRef}
         />
         <Button type='submit'>Add User</Button>
       </form>
