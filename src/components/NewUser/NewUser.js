@@ -15,7 +15,7 @@ const NewUser = ({onAddUser}) => {
     setErrorMessage(message);
   };
 
-  const hideValidationModalHandler = () => {
+  const hideErrorModalHandler = () => {
     setErrorMessage('');
   }
 
@@ -26,7 +26,7 @@ const NewUser = ({onAddUser}) => {
         <ErrorModal
           title="An error occurred"
           message={errorMessage}
-          onClose={hideValidationModalHandler}/>
+          onClose={hideErrorModalHandler}/>
       }
     </>
   )
